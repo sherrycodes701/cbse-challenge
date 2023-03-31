@@ -525,7 +525,7 @@ if (level == 1) {
         current_tree = value
         current_tree_performed = 0
         while (current_tree_performed == 0) {
-            pauseUntil(() => true)
+            pauseUntil(() => current_tree_performed == 0)
         }
     }
 }
