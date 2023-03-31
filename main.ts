@@ -354,14 +354,9 @@ function makeAllTrees () {
     tree10.setPosition(123, 94)
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (level == 0) {
-        info.setLife(8)
-        level += 1
-    }
     if (level == 1) {
-        for (let value of trees) {
-            cutTree(value)
-        }
+        cutTree(current_tree)
+        current_tree_performed += 1
     }
 })
 function cutTree (mySprite: Sprite) {
@@ -373,6 +368,8 @@ info.onLifeZero(function () {
     game.setGameOverPlayable(false, music.melodyPlayable(music.bigCrash), false)
     game.setGameOverMessage(false, "GAME OVER!")
 })
+let current_tree_performed = 0
+let current_tree: Sprite = null
 let tree10: Sprite = null
 let tree9: Sprite = null
 let tree8: Sprite = null
@@ -383,7 +380,6 @@ let tree4: Sprite = null
 let tree3: Sprite = null
 let tree2: Sprite = null
 let tree1: Sprite = null
-let trees: Sprite[] = []
 let level = 0
 level = 0
 game.splash("Welcome to The UNIVERSAL PROGRAMMERS!")
@@ -509,8 +505,10 @@ scene.setBackgroundImage(img`
     7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
     7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
     `)
+level = 1
+info.setLife(8)
 makeAllTrees()
-trees = [
+let trees = [
 tree1,
 tree2,
 tree3,
@@ -522,3 +520,12 @@ tree8,
 tree9,
 tree10
 ]
+if (level == 1) {
+    for (let value of trees) {
+        current_tree = value
+        current_tree_performed = 0
+        while (current_tree_performed == 0) {
+            pauseUntil(() => true)
+        }
+    }
+}
